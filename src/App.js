@@ -1,19 +1,39 @@
 /*global chrome*/
 import React, { Component } from 'react';
-import { List, Segment, Input,Container, Divider, Grid, Header, Icon } from 'semantic-ui-react'
-
+import { Loader, Dimmer, Image,List, Segment, Input,Container, Divider, Grid, Header, Icon } from 'semantic-ui-react'
+import logo from './logo.png';
 class App extends Component {
   constructor(props){
     super(props)
     this.state = {
       query:"",
+      results:[],
+      loading: false
     }
     this.onSearchChange = this.onSearchChange.bind(this);
     this.search = this.search.bind(this);
   }
 
   search(){
+    this.setState({loading:true});
     console.log(this.state.query);
+    fetch('http://localhost:8000/query/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          query: this.state.query
+        }),
+      })
+      .then(response => {
+        console.log(response);
+        return response.json()
+      })
+      .then(data => {
+        console.log(data);
+        this.setState({results:data,loading:false});
+      })
   }
 
   onSearchChange(e){
@@ -47,7 +67,7 @@ class App extends Component {
     </style>
 
     <Header as='h2' icon inverted textAlign='center'>
-      <Icon name='grid layout' />
+      <Image src={logo}/>
         Historia
       <Header.Subheader>
         Search Any content in your history instantly!
@@ -72,25 +92,23 @@ class App extends Component {
       Results
     </Header>
     <Segment inverted>
-    <List divided inverted relaxed>
-      <List.Item>
-        <List.Content>
-          <List.Header>Snickerdoodle</List.Header>
-          An excellent companion
-        </List.Content>
-      </List.Item>
-      <List.Item>
-        <List.Content>
-          <List.Header>Poodle</List.Header>A poodle, its pretty basic
-        </List.Content>
-      </List.Item>
-      <List.Item>
-        <List.Content>
-          <List.Header>Paulo</List.Header>
-          He's also a dog
-        </List.Content>
-      </List.Item>
-    </List>
+      {this.state.loading?
+        <Dimmer active>
+          <Loader />
+        </Dimmer>
+        :
+        <List divided inverted relaxed>
+          {this.state.results.map((item)=>{
+            return (
+              <List.Item>
+                <List.Content>
+                  <List.Header>{item.sourceUrl}</List.Header>
+                </List.Content>
+              </List.Item>
+            )
+          })}
+        </List>
+      }
   </Segment>
   </Container>
     );
