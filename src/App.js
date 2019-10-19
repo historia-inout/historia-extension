@@ -14,6 +14,10 @@ class App extends Component {
     this.search = this.search.bind(this);
   }
 
+  openUrl(url){
+    chrome.tabs.create({url: url});
+  }
+
   search(){
     this.setState({loading:true});
     console.log(this.state.query);
@@ -37,7 +41,7 @@ class App extends Component {
   }
 
   onSearchChange(e){
-    this.setState({query:e.target.value})
+    this.setState({query:e.target.value,results:[]})
   }
 
   render() {
@@ -87,29 +91,37 @@ class App extends Component {
           onChange={this.onSearchChange} icon='search' placeholder='Search...' />
       </Grid.Column>
     </Grid>
-
-    <Header as='h2' inverted textAlign='center'>
-      Results
-    </Header>
-    <Segment inverted>
-      {this.state.loading?
-        <Dimmer active>
+    <br/>
+        {this.state.loading?
+        <Segment inverted>
+        <Dimmer>
+          <br/>
           <Loader />
+          <br/>
         </Dimmer>
+        </Segment>
         :
+        this.state.results.length!==0?
+        <div>
+        <Header as='h2' inverted textAlign='center'>
+          Results
+        </Header>
+        <Segment inverted>
         <List divided inverted relaxed>
           {this.state.results.map((item)=>{
             return (
               <List.Item>
                 <List.Content>
-                  <List.Header>{item.sourceUrl}</List.Header>
+                  <List.Header onClick={()=>{this.openUrl(item.sourceUrl)}}>{item.sourceUrl}</List.Header>
                 </List.Content>
               </List.Item>
             )
           })}
         </List>
+        </Segment>
+        </div>
+        :""
       }
-  </Segment>
   </Container>
     );
   }
