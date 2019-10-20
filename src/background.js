@@ -3,18 +3,20 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
       chrome.tabs.sendMessage(tabId, {type: 'getDoc'}, function (doc) {
         console.log(doc);
         console.log(tab.url);
-        var postRequestUrl = "http://localhost:8000/scrape/";
-        $.ajax({
-              url: postRequestUrl,
-              method: "POST",
-              contentType: "application/json",
-              data: JSON.stringify({
-                  url: tab.url
+        if(!tab.url.includes("localhost")){
+          var postRequestUrl = "http://localhost:8000/scrape/";
+          $.ajax({
+                url: postRequestUrl,
+                method: "POST",
+                contentType: "application/json",
+                data: JSON.stringify({
+                    url: tab.url
+                })
+              }).done(function(msg){
+                console.log(msg);
+              //   alert("Success?")
               })
-            }).done(function(msg){
-              console.log(msg);
-            //   alert("Success?")
-            })
+        }
       });
     }
 });
