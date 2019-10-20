@@ -162,7 +162,7 @@ class App extends Component {
                      <Grid>
                         <Grid.Row>
                           <Grid.Column verticalAlign="middle" width={3}>
-                          <Image src={item.icon} avatar verticalAlign='middle'/>
+                            {item.icon!==" "?<Image src={item.icon} avatar verticalAlign='middle'/>:<Icon name="connectdevelop"/>}
                           </Grid.Column>
                           <Grid.Column verticalAlign="middle" width={this.state.history?10:9}>
                             <List.Content onClick={()=>this.openUrl(item.url)} verticalAlign='middle'>
