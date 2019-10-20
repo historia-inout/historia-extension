@@ -3,7 +3,7 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
       chrome.tabs.sendMessage(tabId, {type: 'getDoc'}, function (doc) {
         console.log(doc);
         console.log(tab.url);
-        if(!tab.url.includes("localhost")){
+        if(!tab.url.includes("localhost") && !tab.url.includes("/chrome")){
           var postRequestUrl = "http://localhost:8000/scrape/";
           $.ajax({
                 url: postRequestUrl,

@@ -1,68 +1,49 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Welcome to Historia!
 
-## Available Scripts
+<div class="logos"><img src="./logo/profile.png" width="220px" align="right"></div>
+Historia is a Chrome Extension which powers users to query through their history with any vague idea that they have about the website and its content. It will even let you search for an image that you have seen somewhere in your past visits using the descriptions that is provided by the user. We have a cross platform Mobile Application which will let the user search through his browser history even in mobile phones.
 
-In the project directory, you can run:
 
-### `yarn start`
+# Steps to run
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Backend
+NOTE : make sure you have Google Cloud Vision API key file exported to path.
+* run `git clone https://github.com/historia-inout/backend.git`
+*  open the cloned folder in terminal
+*  `virtualenv venv`
+*  `source venv/bin/activate `
+*  `pip install -r requirements `
+*  `cd mysite`
+*  `python manage.py migrate `
+*  `python manage.py runserver`
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+## Chrome Extension
+The Chrome Extension is build using React.
+ * run `git clone https://github.com/historia-inout/historia-extension` 
+ * open the cloned folder in terminal 
+ *  `yarn install`
+ *  `yarn run build` 
+ * enable developer mode in your extensions page of google chrome
+ * load the build folder to install the extension
 
-### `yarn test`
+## Features
+* Let users query through their history
+* Users can search for any text as well as images(using the description)
+* Provides a summary of the website results that the user requests for.
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Screenshots
 
-### `yarn build`
+<div class="logos"><img src="./Screenshots/1.png"></div>
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+<div class="logos"><img src="./Screenshots/2.png"></div>
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+<div class="logos"><img src="./Screenshots/3.png"></div>
 
-### `yarn eject`
+## Future Work
+* Add video content searching functionality
+* Provide more privacy to the user by performing everything in the client side.
+* Scrape more sites which are now not accessible.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `yarn build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+## Contributions
+Everyone is open to make any type of contributions to this project. If you find any bugs or need any features to be added you are free to create an issue and if you are able to solve the issue we'll be happy else we will be solving it.

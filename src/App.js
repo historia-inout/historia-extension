@@ -12,7 +12,8 @@ class App extends Component {
       results:[],
       loading: false,
       copied: false,
-      history: true
+      history: true,
+      historyResults:[]
     }
     this.onSearchChange = this.onSearchChange.bind(this);
     this.search = this.search.bind(this);
@@ -32,16 +33,21 @@ class App extends Component {
     })
     .then(data => {
       console.log(data);
-        let results=[]
-        data.collection.map((item)=>{
-          let d = {
-            url: item.sourceUrl,
-            title: item.title,
-            icon: item.icon
+      let results=[]
+      Object.keys(data).forEach(function(key) {
+          let item = {
+            url: key
           }
-          results.push(d);
-        });
-        this.setState({results:results,loading:false,copied:false,dropdown: new Array(10)});
+          item.url = data[key].url;
+          item.icon = data[key].icon;
+          item.title = data[key].title;
+          console.log(item);
+          results.push(item);
+      });
+      if(results.length>5){
+        results.splice(6, results.length - (6) );
+      }
+      this.setState({results:results,historyResults:results,loading:false,copied:false,dropdown: new Array(10)});
     })
   }
 
@@ -90,7 +96,11 @@ class App extends Component {
   }
 
   onSearchChange(e){
-    this.setState({query:e.target.value,results:[],copied:false,history:false,loading:true})
+    let results=[];
+    if(e.target.value===""){
+      results=this.state.historyResults;
+    }
+    this.setState({query:e.target.value,results:results,copied:false,history:false,loading:true})
   }
 
   render() {
@@ -162,7 +172,7 @@ class App extends Component {
                      <Grid>
                         <Grid.Row>
                           <Grid.Column verticalAlign="middle" width={3}>
-                            {item.icon!==" "?<Image src={item.icon} avatar verticalAlign='middle'/>:<Icon name="connectdevelop"/>}
+                            {item.icon!==" "?<Image src={item.icon} avatar verticalAlign='middle'/>:<Icon verticalAlign="middle" size="large" name="connectdevelop"/>}
                           </Grid.Column>
                           <Grid.Column verticalAlign="middle" width={this.state.history?10:9}>
                             <List.Content onClick={()=>this.openUrl(item.url)} verticalAlign='middle'>
@@ -212,6 +222,7 @@ class App extends Component {
             </div>
             :""
           }
+          <br/>
       </Container>
     );
   }
